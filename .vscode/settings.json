@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "*.ejs": "html",
+        "array": "cpp",
+        "*.tcc": "cpp",
+        "memory": "cpp",
+        "future": "cpp",
+        "istream": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "variant": "cpp",
+        "ranges": "cpp",
+        "bitset": "cpp",
+        "optional": "cpp",
+        "type_traits": "cpp",
+        "new": "cpp"
+    }
+}
