@@ -10,33 +10,31 @@ class LRU: public Eviction<Key>
 { 
 private:
     queue<Key> keys;
-    set<Key> ids; // to keep track of all the unique keys 
 
 public:
-    LRU(){
-
-        ids.clear();
-    };
+    LRU(){};
 
     void insert(Key key){
-        if(ids.find(key) == ids.end()){
-            keys.push(key);
-            ids.insert(key);
-        }
+        keys.push(key);
     };
 
     void access(Key key){
-        // find the key in the queue and move it to the front 
+        //find the key in the queue and move it to the front 
         queue<Key> temp;
+        Key tempKey;
+
         while(!keys.empty()){
             if(keys.front() == key){
+                tempKey = keys.front();
                 keys.pop();
             }
             temp.push(keys.front());
             keys.pop();
         }
+        temp.push(tempKey);
 
-        while(!temp.empty()){
+        while (!temp.empty())
+        {
             keys.push(temp.front());
             temp.pop();
         }
@@ -53,21 +51,23 @@ public:
         }
         key = keys.front();
         keys.pop();
-        ids.erase(key);
         return {key, true};
     };
 
     // same as the access method
     void updateKey(Key key){
             queue<Key> temp;
+            Key tempKey;
             while(!keys.empty()){
             if(keys.front() == key){
+                tempKey = keys.front();
                 keys.pop();
-                break;
             }
             temp.push(keys.front());
             keys.pop();         
                }
+            
+            temp.push(tempKey);
             while(!temp.empty()){
                 keys.push(temp.front());
                 temp.pop();

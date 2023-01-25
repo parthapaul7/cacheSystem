@@ -40,6 +40,7 @@ int main(){
     // cout<<cache->get(2).first<<endl;
     cache->insert(3, "three");
     cache->insert(3, "three updated");
+    cout<<cache->get(1).first<<endl;
     cache->insert(6, "six");
     // cache->insert(5, "five");
     // cache->insert(4, "four");

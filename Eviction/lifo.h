@@ -17,10 +17,7 @@ class LIFO: public Eviction<Key>
         };
 
         void insert(Key key){
-            if(ids.find(key) == ids.end()){
                 keys.push(key);
-                ids.insert(key);
-            }
         };
 
         void access(Key key){
@@ -36,21 +33,22 @@ class LIFO: public Eviction<Key>
             }
             key = keys.top();
             keys.pop();
-            ids.erase(key);
             return {key, true};
         };
 
         void updateKey(Key key){
+            Key tempKey;
             stack<Key> temp;
             while(!keys.empty()){
             if(keys.top() == key){
+                tempKey = keys.top();
                 keys.pop();
-                break;
             }
             temp.push(keys.top());
             keys.pop();
             }
 
+            temp.push(tempKey);
             while(!temp.empty()){
                 keys.push(temp.top());
                 temp.pop();

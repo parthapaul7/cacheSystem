@@ -32,15 +32,18 @@ class FIFO: public Eviction<Key>
         };
 
         void updateKey(Key key){
+            Key tempKey;
             queue<Key> temp;
             while(!keys.empty()){
             if(keys.front() == key){
+                tempKey = keys.front();
                 keys.pop();
-                break;
                 }
                 temp.push(keys.front());
                 keys.pop();
             }
+
+            temp.push(tempKey);
             while(!temp.empty()){
                 keys.push(temp.front());
                 temp.pop();
