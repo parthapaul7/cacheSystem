@@ -21,7 +21,7 @@ class FIFO: public Eviction<Key>
 
         pair<Key, bool> evict(){
 
-            cout<<"evicting from FIFO"<<endl;
+            cout<<"evicting from FIFO\n"<<endl;
             Key key;
             if(keys.empty()){
                 return {key, false};
@@ -39,8 +39,10 @@ class FIFO: public Eviction<Key>
                 tempKey = keys.front();
                 keys.pop();
                 }
+            else{
                 temp.push(keys.front());
                 keys.pop();
+            }
             }
 
             temp.push(tempKey);
