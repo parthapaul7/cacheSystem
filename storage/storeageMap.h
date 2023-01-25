@@ -20,11 +20,23 @@ public:
         storageMap.clear();
     };
 
-    void insert(Key key, Value value){
-
+    int insert(Key key, Value value){
+        if(storageMap.find(key) != storageMap.end()){
+            cout<<"key already exists , updating to existing key"<<endl;
+            storageMap[key] = value;
+            return -1;
+        }
         storageMap[key] = value;
+        return 1;
         // keys.insert(key);
     };
+
+    bool isKeyExist(Key key){
+        if(storageMap.find(key) == storageMap.end()){
+            return false;
+        }
+        return true;
+    }
 
     int pop(Key key){
         if(storageMap.find(key) == storageMap.end()){

@@ -31,15 +31,24 @@ class A{
 
 
 int main(){
-    auto *s = new StorageMap<int, string>(2);
+    auto *s = new StorageMap<int, string>(3);
     auto *e = new LRU<int>();
     Cache<int, string> *cache = new Cache<int, string>(s,e);
 
     cache->insert(1, "one");
     cache->insert(2, "two");
-    cout<<cache->get(2).first<<endl;
+    // cout<<cache->get(2).first<<endl;
     cache->insert(3, "three");
+    cache->insert(3, "three updated");
+    cache->insert(6, "six");
+    // cache->insert(5, "five");
+    // cache->insert(4, "four");
+    cout<<cache->get(1).first<<endl;
     cout<<cache->get(2).first<<endl;
+    cout<<cache->get(3).first<<endl;
+    cout<<cache->get(4).first<<endl;
+    cout<<cache->get(5).first<<endl;
+    cout<<cache->get(6).first<<endl;
     // cache->insert(3, "three");
 
     // map<int, int> m;

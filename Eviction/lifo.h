@@ -40,6 +40,24 @@ class LIFO: public Eviction<Key>
             return {key, true};
         };
 
+        void updateKey(Key key){
+            stack<Key> temp;
+            while(!keys.empty()){
+            if(keys.top() == key){
+                keys.pop();
+                break;
+            }
+            temp.push(keys.top());
+            keys.pop();
+            }
+
+            while(!temp.empty()){
+                keys.push(temp.top());
+                temp.pop();
+            }
+            return;  
+        };
+
 };
 
 

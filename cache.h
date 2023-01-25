@@ -10,6 +10,7 @@ using namespace std;
 #include "storage/storeageMap.h"
 #include "Eviction/lifo.h"
 #include "Eviction/lru.h"
+#include "Eviction/fifo.h"
 
 template <class Key, class Value>
 class Cache
@@ -26,27 +27,24 @@ public:
 
     void insert(Key key, Value value)
     {
-        if (storage->isFull())
-        {
+        if(storage->isKeyExist(key)){
+            cout<<"key already exist"<<endl;
+            eviction->updateKey(key);
+            storage->insert(key, value);
+            return;
+        }
+
+        if (storage->isFull()){
+            cout<<"storage is full"<<endl;
             auto key = eviction->evict();
             if (key.second)
             {
                 storage->pop(key.first);
             }
         }
+
         storage->insert(key, value);
         eviction->insert(key);
-    };
-
-    int pop(Key key)
-    {
-        if (storage->get(key).second)
-        {
-            eviction->evict();
-            storage->pop(key);
-            return 1;
-        }
-        return 0;
     };
 
     pair<Value, bool> get(Key key)

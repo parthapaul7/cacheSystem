@@ -10,10 +10,11 @@ class LRU: public Eviction<Key>
 { 
 private:
     queue<Key> keys;
-    set<Key> ids; // to make sure that the keys are unique 
+    set<Key> ids; // to keep track of all the unique keys 
 
 public:
     LRU(){
+
         ids.clear();
     };
 
@@ -25,16 +26,22 @@ public:
     };
 
     void access(Key key){
-        // find the key in the stack and move it to the top
+        // find the key in the queue and move it to the front 
         queue<Key> temp;
         while(!keys.empty()){
             if(keys.front() == key){
                 keys.pop();
-                break;
             }
             temp.push(keys.front());
             keys.pop();
         }
+
+        while(!temp.empty()){
+            keys.push(temp.front());
+            temp.pop();
+        }
+
+        return;
     };
 
     pair<Key, bool> evict(){
@@ -48,6 +55,24 @@ public:
         keys.pop();
         ids.erase(key);
         return {key, true};
+    };
+
+    // same as the access method
+    void updateKey(Key key){
+            queue<Key> temp;
+            while(!keys.empty()){
+            if(keys.front() == key){
+                keys.pop();
+                break;
+            }
+            temp.push(keys.front());
+            keys.pop();         
+               }
+            while(!temp.empty()){
+                keys.push(temp.front());
+                temp.pop();
+            }
+            return;
     };
 
 };
