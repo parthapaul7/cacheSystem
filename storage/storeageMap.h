@@ -20,14 +20,9 @@ public:
         storageMap.clear();
     };
 
-    int insert(Key key, Value value){
-        if(storageMap.find(key) != storageMap.end()){
-            cout<<"key already exists , updating to existing key"<<endl;
-            storageMap[key] = value;
-            return -1;
-        }
+    void insert(Key key, Value value){
         storageMap[key] = value;
-        return 1;
+        return;
         // keys.insert(key);
     };
 
@@ -51,7 +46,7 @@ public:
     pair<Value,bool> get(Key key){
         Value value;
         if(storageMap.find(key) == storageMap.end()){
-            cout<<"key not found"<<endl;
+            cout<<"key not found";
             return {value, false} ;
         }
         value = storageMap[key]; 

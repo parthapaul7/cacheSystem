@@ -27,12 +27,12 @@ public:
 
     void insert(Key key, Value value)
     {
-        // if(storage->isKeyExist(key)){
-        //     cout<<"key already exist"<<endl;
-        //     eviction->updateKey(key);
-        //     storage->insert(key, value);
-        //     return;
-        // }
+        if(storage->isKeyExist(key)){
+            cout<<"key already exist, updating existing key"<<endl;
+            eviction->updateKey(key);
+            storage->insert(key, value);
+            return;
+        }
 
         if (storage->isFull()){
             cout<<"storage is full"<<endl;

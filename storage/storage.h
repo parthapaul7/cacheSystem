@@ -12,7 +12,7 @@ class Storage
 {
 public:
     Storage(){};
-    virtual int insert(Key key, Value value) = 0;
+    virtual void insert(Key key, Value value) = 0;
     virtual bool isKeyExist(Key key) = 0;
     virtual int pop(Key key) = 0;
     virtual pair<Value, bool> get(Key key) = 0;

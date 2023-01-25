@@ -12,7 +12,7 @@ private:
     queue<Key> keys;
 
 public:
-    LRU(){};
+    LRU(){ };
 
     void insert(Key key){
         keys.push(key);
@@ -20,9 +20,8 @@ public:
 
     void access(Key key){
         //find the key in the queue and move it to the front 
-        queue<Key> temp;
         Key tempKey;
-
+        queue<Key> temp;
         while(!keys.empty()){
             if(keys.front() == key){
                 tempKey = keys.front();
@@ -44,7 +43,7 @@ public:
 
     pair<Key, bool> evict(){
 
-        cout<<"evicting from LRU"<<endl;
+        cout<<"evicting from LRU\n"<<endl;
         Key key;
         if(keys.empty()){
             return {key, false};
@@ -54,25 +53,32 @@ public:
         return {key, true};
     };
 
-    // same as the access method
+    // same as the access method for LRU
     void updateKey(Key key){
-            queue<Key> temp;
-            Key tempKey;
-            while(!keys.empty()){
+        queue<Key> temp;
+        Key tempKey;
+
+        while(!keys.empty()){
             if(keys.front() == key){
                 tempKey = keys.front();
                 keys.pop();
             }
-            temp.push(keys.front());
-            keys.pop();         
-               }
-            
-            temp.push(tempKey);
-            while(!temp.empty()){
-                keys.push(temp.front());
-                temp.pop();
+            else{
+                temp.push(keys.front());
+                keys.pop();
             }
-            return;
+        }
+        temp.push(tempKey);
+
+        //print the queue
+
+        while (!temp.empty())
+        {
+            keys.push(temp.front());
+            temp.pop();
+        }
+
+        return; 
     };
 
 };

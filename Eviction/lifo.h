@@ -9,15 +9,12 @@ class LIFO: public Eviction<Key>
 {
     private:
         stack<Key> keys;
-        set<Key> ids; // to make sure that the keys are unique
     
     public:
-        LIFO(){
-            ids.clear();
-        };
+        LIFO(){ };
 
         void insert(Key key){
-                keys.push(key);
+            keys.push(key);
         };
 
         void access(Key key){
@@ -26,7 +23,7 @@ class LIFO: public Eviction<Key>
 
         pair<Key, bool> evict(){
 
-            cout<<"evicting from LIFO"<<endl;
+            cout<<"evicting from LIFO\n"<<endl;
             Key key;
             if(keys.empty()){
                 return {key, false};
@@ -44,8 +41,10 @@ class LIFO: public Eviction<Key>
                 tempKey = keys.top();
                 keys.pop();
             }
-            temp.push(keys.top());
-            keys.pop();
+            else{
+                temp.push(keys.top());
+                keys.pop();
+            }
             }
 
             temp.push(tempKey);
