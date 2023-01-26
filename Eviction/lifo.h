@@ -47,11 +47,11 @@ class LIFO: public Eviction<Key>
             }
             }
 
-            temp.push(tempKey);
             while(!temp.empty()){
                 keys.push(temp.top());
                 temp.pop();
             }
+            keys.push(tempKey);
             return;  
         };
 

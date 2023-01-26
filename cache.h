@@ -1,4 +1,8 @@
 
+// as we have used map based storage keys should be unique
+// if we have duplicate keys it will update the previous value with O(n) time complexity
+// other operations happen in O(1) average time complexity
+
 #ifndef cache
 #include <bits/stdc++.h>
 using namespace std;

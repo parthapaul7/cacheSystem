@@ -1,5 +1,5 @@
-// the storage template for encapsulating the storage
-// we have used a map based storage for now
+// the storage template  
+// you can make custom storage classes by inheriting this class
 
 #ifndef storage_h 
 #define storage_h

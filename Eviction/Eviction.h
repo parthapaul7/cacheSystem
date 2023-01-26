@@ -1,3 +1,6 @@
+// Eviction policy template class
+// you can make your own eviction policy by inheriting this class
+
 #ifndef Eviction_Policies
 #define Eviction_Policies
 

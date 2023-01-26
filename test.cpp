@@ -8,18 +8,20 @@ void testCache(Cache<int , string> *cache){
     cache->insert(2, "two");
 
     cache->insert(3, "three");
-    cache->insert(3, "three updated");
+    cache->insert(2, "two updated");
     cout<<cache->get(1).first<<endl;
-    cache->insert(6, "six");
+    cache->insert(4, "six");
 
+    cout<<cache->get(3).first<<endl; // not found in case of LRU
+    cache->insert(5, "five");
     // cache->insert(5, "five");
     // cache->insert(4, "four");
     cout<<cache->get(1).first<<endl;
     cout<<cache->get(2).first<<endl;
     cout<<cache->get(3).first<<endl;
-    // cout<<cache->get(4).first<<endl;
-    // cout<<cache->get(5).first<<endl;
-    cout<<cache->get(6).first<<endl;
+    cout<<cache->get(4).first<<endl;
+    cout<<cache->get(5).first<<endl;
+    // cout<<cache->get(6).first<<endl;
 }
 
 
@@ -46,5 +48,6 @@ int main(){
     auto *cache3= new Cache<int, string>(s3, e3);
     testCache(cache3);
     delete s3, e3, cache3;
+
 
 }

@@ -1,4 +1,5 @@
-// using a map based storage to store key-value pairs of any kind
+// using a unordered_map having time average complexity of O(1)
+// storage to store key-value pairs of any kind eg - int , string 
 
 #ifndef STORAGE_MAP_H
 
@@ -11,7 +12,7 @@ class StorageMap : public Storage<Key, Value>
 {
 private:
     int capacity; // maximum number of key-value pairs
-    map<Key, Value> storageMap;
+    unordered_map<Key, Value> storageMap;
     // set<Key> keys; // to make sure that the keys are unique
 
 public:
