@@ -6,13 +6,20 @@ template <class Key>
 class LIFO: public Eviction<Key>
 {
     private:
-        stack<Key> keys;
-    
+    // list used to reduce time complexity of updation to O(1)
+        list<Key> keys;
+        unordered_map<Key , list<int>::iterator> keyMap;   
     public:
         LIFO(){ };
 
         void l_insert(Key key){
-            keys.push(key);
+            if(keyMap.find(key) != keyMap.end()){
+                // update will happen
+                keys.erase(keyMap[key]);
+                keyMap.erase(key);
+            }
+            keys.push_back(key);
+            keyMap[key] = keys.begin();
         };
 
         void l_access(Key key){
@@ -20,37 +27,17 @@ class LIFO: public Eviction<Key>
         };
 
         pair<Key, bool> l_evict(){
-
-            cout<<"evicting from LIFO\n"<<endl;
             Key key;
             if(keys.empty()){
                 return {key, false};
             }
-            key = keys.top();
-            keys.pop();
+
+            key = keys.back();
+            keys.pop_back();
+            keyMap.erase(key);
+
+            cout<<"evicting"<<key<<"from LIFO\n"<<endl;
             return {key, true};
-        };
-
-        void l_updateKey(Key key){
-            Key tempKey;
-            stack<Key> temp;
-            while(!keys.empty()){
-            if(keys.top() == key){
-                tempKey = keys.top();
-                keys.pop();
-            }
-            else{
-                temp.push(keys.top());
-                keys.pop();
-            }
-            }
-
-            while(!temp.empty()){
-                keys.push(temp.top());
-                temp.pop();
-            }
-            keys.push(tempKey);
-            return;  
         };
 
 };

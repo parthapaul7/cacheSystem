@@ -4,6 +4,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// individual modification methods are thread safe
+
 template <class Key, class Value>
 class Storage 
 {

@@ -7,76 +7,46 @@ template <class Key>
 class LRU: public Eviction<Key>
 { 
 private:
-    queue<Key> keys;
+    list<Key> keys;
+    unordered_map<Key , list<int>::iterator> keyMap;
+    // linked list and map is used to reduce time complexity of to O(1)
 
 public:
     LRU(){ };
 
     void l_insert(Key key){
-        keys.push(key);
+            if(keyMap.find(key) != keyMap.end()){
+                // update will happen
+                keys.erase(keyMap[key]);
+                keyMap.erase(key);
+            }
+            keys.push_front(key);
+            keyMap[key] = keys.begin();
+
     };
 
     void l_access(Key key){
-        //find the key in the queue and move it to the front 
-        Key tempKey;
-        queue<Key> temp;
-        while(!keys.empty()){
-            if(keys.front() == key){
-                tempKey = keys.front();
-                keys.pop();
-            }
-            temp.push(keys.front());
-            keys.pop();
-        }
-        temp.push(tempKey);
 
-        while (!temp.empty())
-        {
-            keys.push(temp.front());
-            temp.pop();
+        if(keyMap.find(key) == keyMap.end()){
+            return;
         }
 
-        return;
+        keys.erase(keyMap[key]);
+        keys.push_front(key); 
     };
 
     pair<Key, bool> l_evict(){
-
-        cout<<"evicting from LRU\n"<<endl;
         Key key;
         if(keys.empty()){
             return {key, false};
         }
-        key = keys.front();
-        keys.pop();
+
+        key = keys.back();
+        keys.pop_back();
+        keyMap.erase(key);
+
+        cout<<"evicting"<<key<<"from LRU\n"<<endl;
         return {key, true};
-    };
-
-    // same as the access method for LRU
-    void l_updateKey(Key key){
-        queue<Key> temp;
-        Key tempKey;
-
-        while(!keys.empty()){
-            if(keys.front() == key){
-                tempKey = keys.front();
-                keys.pop();
-            }
-            else{
-                temp.push(keys.front());
-                keys.pop();
-            }
-        }
-        temp.push(tempKey);
-
-        //print the queue
-
-        while (!temp.empty())
-        {
-            keys.push(temp.front());
-            temp.pop();
-        }
-
-        return; 
     };
 
 };

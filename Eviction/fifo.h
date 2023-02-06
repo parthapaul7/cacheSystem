@@ -5,13 +5,22 @@ template <class Key>
 class FIFO: public Eviction<Key>
 {
     private:
-        queue<Key> keys;
+        // linked list used instead ofa single queue to reduce time complexity of updation to O(1)
+        list<Key> keys;
+        unordered_map<Key , list<int>::iterator> keyMap;
 
     public:
         FIFO(){ };
 
         void l_insert(Key key){
-            keys.push(key);
+
+            if(keyMap.find(key) != keyMap.end()){
+                // if key already exists, update will happen
+                keys.erase(keyMap[key]);
+                keyMap.erase(key);
+            }
+            keys.push_front(key);
+            keyMap[key] = keys.begin();
         };
 
         void l_access(Key key){
@@ -20,39 +29,18 @@ class FIFO: public Eviction<Key>
 
         pair<Key, bool> l_evict(){
 
-            cout<<"evicting from FIFO\n"<<endl;
             Key key;
             if(keys.empty()){
                 return {key, false};
             }
-            key = keys.front();
-            keys.pop();
+
+            key = keys.back();
+            keys.pop_back();
+            keyMap.erase(key);
+
+            cout<<"evicting"<<key<<"from FIFO\n"<<endl;
             return {key, true};
         };
-
-        void l_updateKey(Key key){
-            Key tempKey;
-            queue<Key> temp;
-            while(!keys.empty()){
-            if(keys.front() == key){
-                tempKey = keys.front();
-                keys.pop();
-                }
-            else{
-                temp.push(keys.front());
-                keys.pop();
-            }
-            }
-
-            temp.push(tempKey);
-            while(!temp.empty()){
-                keys.push(temp.front());
-                temp.pop();
-            }
-            return;
-        };
-
-        
 
 }; 
 

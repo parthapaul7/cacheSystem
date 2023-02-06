@@ -1,6 +1,7 @@
 // Eviction policy template class
 // you can make your own eviction policy by inheriting this class
 
+// individual methods are thread safe
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -24,14 +25,9 @@ public:
         lock_guard<mutex> lock(m_mutex);
         l_access(key);
     };
-    virtual void updateKey(Key key) {
-        lock_guard<mutex> lock(m_mutex);
-        l_updateKey(key);
-    };
 
 protected:
     virtual void l_insert(Key key) = 0;
     virtual pair<Key, bool> l_evict() = 0;
     virtual void l_access(Key key) = 0;
-    virtual void l_updateKey(Key key) = 0;
 };

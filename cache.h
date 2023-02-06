@@ -31,14 +31,16 @@ public:
 
     void insert(Key key, Value value)
     {
-        if(storage->isKeyExist(key)){
-            cout<<"key already exist, updating existing key"<<endl;
-            eviction->updateKey(key);
-            storage->insert(key, value);
-            return;
-        }
+        // if(storage->isKeyExist(key)){
+        //     cout<<"key already exist, updating existing key"<<endl;
+        //     eviction->updateKey(key);
+        //     storage->insert(key, value);
+        //     return;
+        // }  
 
-        if (storage->isFull()){
+        // separate updation does not required  handled by insert function itself
+
+        if (!storage->isKeyExist(key) && storage->isFull()){
             cout<<"storage is full"<<endl;
             auto key = eviction->evict();
             if (key.second)

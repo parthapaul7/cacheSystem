@@ -14,5 +14,5 @@ It is Flexible and you can use custom eviction policies and storage policies.
 
 ## Time Complexity
 1. Insertion : O(1)
-2. Access : O(n) for LRU and O(1) for FIFO and LIF0
-3. Update : O(n) 
+2. Access : O(1) for all methods 
+3. Update : O(1) 
