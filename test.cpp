@@ -14,14 +14,13 @@ void testCache(Cache<int , string> *cache){
 
     cout<<cache->get(3).first<<endl; // not found in case of LRU
     cache->insert(5, "five");
-    // cache->insert(5, "five");
-    // cache->insert(4, "four");
+    cache->insert(5, "five");
+    cache->insert(4, "four");
     cout<<cache->get(1).first<<endl;
     cout<<cache->get(2).first<<endl;
     cout<<cache->get(3).first<<endl;
     cout<<cache->get(4).first<<endl;
     cout<<cache->get(5).first<<endl;
-    // cout<<cache->get(6).first<<endl;
 }
 
 
@@ -30,7 +29,9 @@ int main(){
     cout<< "TEST: LRU" << endl;
     auto *s = new StorageMap<int, string>(3);
     auto *e = new LRU<int>();
+
     auto *cache1 = new Cache<int, string>(s, e);
+
     testCache(cache1);
     delete s, e, cache1;
 

@@ -1,10 +1,7 @@
 // using a unordered_map having time average complexity of O(1)
 // storage to store key-value pairs of any kind eg - int , string 
 
-#ifndef STORAGE_MAP_H
-
 #include <bits/stdc++.h>
-#include "storage.h"
 using namespace std;
 
 template <class Key , class Value>
@@ -13,7 +10,6 @@ class StorageMap : public Storage<Key, Value>
 private:
     int capacity; // maximum number of key-value pairs
     unordered_map<Key, Value> storageMap;
-    // set<Key> keys; // to make sure that the keys are unique
 
 public:
     StorageMap(int capacity){
@@ -21,7 +17,7 @@ public:
         storageMap.clear();
     };
 
-    void insert(Key key, Value value){
+    void l_insert(Key key, Value value){
         storageMap[key] = value;
         return;
         // keys.insert(key);
@@ -34,7 +30,7 @@ public:
         return true;
     }
 
-    int pop(Key key){
+    int l_pop(Key key){
         if(storageMap.find(key) == storageMap.end()){
             return -1;
         }
@@ -69,5 +65,4 @@ public:
 };
 
  
-#endif 
 

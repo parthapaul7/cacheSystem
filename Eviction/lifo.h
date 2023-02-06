@@ -1,5 +1,3 @@
-#ifndef lifo_h 
-#define lifo_h
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -13,15 +11,15 @@ class LIFO: public Eviction<Key>
     public:
         LIFO(){ };
 
-        void insert(Key key){
+        void l_insert(Key key){
             keys.push(key);
         };
 
-        void access(Key key){
+        void l_access(Key key){
             return;
         };
 
-        pair<Key, bool> evict(){
+        pair<Key, bool> l_evict(){
 
             cout<<"evicting from LIFO\n"<<endl;
             Key key;
@@ -33,7 +31,7 @@ class LIFO: public Eviction<Key>
             return {key, true};
         };
 
-        void updateKey(Key key){
+        void l_updateKey(Key key){
             Key tempKey;
             stack<Key> temp;
             while(!keys.empty()){
@@ -58,5 +56,3 @@ class LIFO: public Eviction<Key>
 };
 
 
-
-#endif

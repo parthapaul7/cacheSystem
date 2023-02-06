@@ -1,4 +1,3 @@
-#ifndef fifo_h
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -11,15 +10,15 @@ class FIFO: public Eviction<Key>
     public:
         FIFO(){ };
 
-        void insert(Key key){
+        void l_insert(Key key){
             keys.push(key);
         };
 
-        void access(Key key){
+        void l_access(Key key){
             return;
         };
 
-        pair<Key, bool> evict(){
+        pair<Key, bool> l_evict(){
 
             cout<<"evicting from FIFO\n"<<endl;
             Key key;
@@ -31,7 +30,7 @@ class FIFO: public Eviction<Key>
             return {key, true};
         };
 
-        void updateKey(Key key){
+        void l_updateKey(Key key){
             Key tempKey;
             queue<Key> temp;
             while(!keys.empty()){
@@ -57,4 +56,3 @@ class FIFO: public Eviction<Key>
 
 }; 
 
-#endif

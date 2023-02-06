@@ -1,6 +1,4 @@
 //implementing LRU with stack
-#ifndef lru_h 
-#define lru_h 
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -14,11 +12,11 @@ private:
 public:
     LRU(){ };
 
-    void insert(Key key){
+    void l_insert(Key key){
         keys.push(key);
     };
 
-    void access(Key key){
+    void l_access(Key key){
         //find the key in the queue and move it to the front 
         Key tempKey;
         queue<Key> temp;
@@ -41,7 +39,7 @@ public:
         return;
     };
 
-    pair<Key, bool> evict(){
+    pair<Key, bool> l_evict(){
 
         cout<<"evicting from LRU\n"<<endl;
         Key key;
@@ -54,7 +52,7 @@ public:
     };
 
     // same as the access method for LRU
-    void updateKey(Key key){
+    void l_updateKey(Key key){
         queue<Key> temp;
         Key tempKey;
 
@@ -82,5 +80,3 @@ public:
     };
 
 };
-
-#endif
