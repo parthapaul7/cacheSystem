@@ -4,6 +4,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+
 template <class Key , class Value>
 class StorageMap : public Storage<Key, Value>
 {
