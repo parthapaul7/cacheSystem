@@ -14,12 +14,12 @@ private:
 public:
     Storage(){};
     virtual void insert(Key key, Value value) {
-        // lock_guard<mutex> lock(m_mutex);
+        lock_guard<mutex> lock(m_mutex);
         l_insert(key, value);
     };
     virtual bool isKeyExist(Key key) = 0;
     virtual int pop(Key key) {
-        // lock_guard<mutex> lok(m_mutex);
+        lock_guard<mutex> lok(m_mutex);
         return l_pop(key);
     };
     virtual pair<Value, bool> get(Key key) = 0;
