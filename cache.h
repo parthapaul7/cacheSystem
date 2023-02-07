@@ -31,12 +31,6 @@ public:
 
     void insert(Key key, Value value)
     {
-        // if(storage->isKeyExist(key)){
-        //     cout<<"key already exist, updating existing key"<<endl;
-        //     eviction->updateKey(key);
-        //     storage->insert(key, value);
-        //     return;
-        // }  
 
         // separate updation does not required  handled by insert function itself
 

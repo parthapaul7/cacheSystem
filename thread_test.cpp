@@ -1,65 +1,69 @@
-#include <iostream>
-#include <thread>
-#include <mutex>
+#include <bits/stdc++.h>
 
-class Parent {
- public:
-  Parent() {}
+using namespace std;
+#include "cache.h"
 
-  virtual void setValue(int value) {
-    // std::lock_guard<std::mutex> lock(m_mutex);
-    doSetValue(value);
-  }
+void testCache(Cache<int , string> *cache){
 
-  virtual int getValue() {
-    // std::lock_guard<std::mutex> lock(m_mutex);
-    return doGetValue();
-  }
+    cache->insert(1, "one");
+    cache->insert(2, "two");
 
-   virtual void doSomething(int n) {
-        std::lock_guard<std::mutex> lock(m_mutex);
-        l_doSomething(n);
-    }
+    cache->insert(3, "three");
+    cache->insert(2, "two updated");
+    cout<<cache->get(1).first<<endl;
+    cache->insert(4, "six");
 
- protected:
-  virtual void doSetValue(int value) = 0;
-  virtual int doGetValue() = 0;
-  virtual void l_doSomething(int n) = 0;
+    cout<<cache->get(3).first<<endl; // not found in case of LRU
+    cache->insert(5, "five");
+    cache->insert(5, "five");
+    cache->insert(4, "four");
+    cout<<cache->get(1).first<<endl;
+    cout<<cache->get(2).first<<endl;
+    cout<<cache->get(3).first<<endl;
+    cout<<cache->get(4).first<<endl;
+    cout<<cache->get(5).first<<endl;
+}
 
- private:
-  std::mutex m_mutex;
-};
+void testThread(Cache<int , string> *cache){
+    cache->insert(1, "one 1");
+    cache->insert(2, "two 1");
+    cache->insert(3, "three 1");
+    cache->insert(4, "four 1");
+    cout<<cache->get(1).first<<endl;
+    cout<<cache->get(2).first<<endl;
+    // cout<<cache->get(3).first<<endl;
+    // cout<<cache->get(4).first<<endl;
+    // cout<<cache->get(5).first<<endl;
+}
 
-class Child : public Parent {
-public:
-  Child() {}
-  void doSetValue(int value) override{
-    m_value = value;
-  }
+void testThread2(Cache<int , string> *cache){
+    cache->insert(1, "one 2");
+    cache->insert(2, "two 2");
+    cout<<cache->get(1).first<<endl;
+    cout<<cache->get(2).first<<endl;
+    // cout<<cache->get(3).first<<endl;
+    // cout<<cache->get(4).first<<endl;
+    // cout<<cache->get(5).first<<endl;
+}
 
-  int doGetValue() override {
-    return m_value;
-  }
+int main(){
+    cout<< "TEST: LRU" << endl;
+    auto *s = new StorageMap<int, string>(3);
+    auto *e = new LRU<int>();
 
-  void l_doSomething(int n) override {
-    setValue(n);
-    std::cout << "Child: value = " << getValue()<< std::endl;
-  }
+    auto *cache1 = new Cache<int, string>(s, e);
 
- private:
-  int m_value = 0;
-};
+    testCache(cache1);
+    thread t1(testThread,cache1);
+    thread t2(testThread,cache1);
+    thread t3(testThread2,cache1);
+    thread t4(testThread2,cache1);
 
-int main() {
-  Child child;
-  std::thread t1([&](){ child.doSomething(1); });
-  std::thread t2([&](){ child.doSomething(5); });
-  std::thread t3([&](){ child.doSomething(58); });
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
 
-        t1.join();
-        t2.join();
-        t3.join();
-    
+    delete s, e, cache1;
 
-  return 0;
 }
